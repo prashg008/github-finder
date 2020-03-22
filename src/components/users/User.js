@@ -4,7 +4,7 @@ import Repos from "../repos/Repos";
 import { Link } from "react-router-dom";
 import GithubContext from "../../context/github/GithubContext";
 
-const User = ({ repos, match }) => {
+const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
   useEffect(() => {
     githubContext.getUser(match.params.login);
@@ -21,10 +21,10 @@ const User = ({ repos, match }) => {
     login,
     html_url,
     followers,
-    follownig,
+    following,
     public_repos,
-    public_gists
-    // hireable
+    public_gists,
+    hireable
   } = githubContext.user;
 
   if (githubContext.loading) return <Spinner />;
@@ -34,12 +34,12 @@ const User = ({ repos, match }) => {
       <Link to="/" className="btn btn-light">
         Back to Search
       </Link>
-      {/* Hireable:{" "}
+      Hireable:{" "}
       {{ hireable } ? (
         <i className="fas fa-check text-success" />
       ) : (
         <i className="fas fa-times-circle text-danger" />
-      )} */}
+      )}
       <div className="card grid-2">
         <div className="all-center">
           <img
@@ -78,12 +78,12 @@ const User = ({ repos, match }) => {
               <strong>Followers:</strong>
               {followers}
             </li>
-            {follownig && (
-              <li>
-                <strong>Follownig:</strong>
-                {follownig}
-              </li>
-            )}
+
+            <li>
+              <strong>Follownig:</strong>
+              {following}
+            </li>
+
             <li>
               <strong>Public Repos:</strong>
               {public_repos}
@@ -97,7 +97,7 @@ const User = ({ repos, match }) => {
       </div>
       <div className="card text-center">
         <div className="badge  badge-primary">Followers: {followers}</div>
-        <div className="badge  badge-success">Follownig: {follownig}</div>
+        <div className="badge  badge-success">Following: {following}</div>
         <div className="badge  badge-light">Public Repos: {public_repos}</div>
         <div className="badge  badge-dark">Public Gists: {public_gists}</div>
       </div>
